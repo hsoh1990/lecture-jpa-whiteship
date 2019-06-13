@@ -1,6 +1,5 @@
 package io.wellstone.lecturejpawhiteship;
 
-import io.wellstone.lecturejpawhiteship.account.Account;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -23,8 +22,15 @@ public class JpaRunner implements ApplicationRunner {
         account.setUsername("hsoh");
         account.setPassword("hibernate");
 
+        Study study = new Study();
+        study.setName("Spring Data JPA");
+
+        account.addStudy(study);
+//        account.removeStudy(study);
+
 //        entityManager.persist(account);
         Session session = entityManager.unwrap(Session.class);
         session.save(account);
+        session.save(study);
     }
 }
