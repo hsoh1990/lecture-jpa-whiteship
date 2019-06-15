@@ -1,5 +1,9 @@
 package io.wellstone.lecturejpawhiteship;
 
+import io.wellstone.lecturejpawhiteship.account.Account;
+import io.wellstone.lecturejpawhiteship.account.Study;
+import io.wellstone.lecturejpawhiteship.post.Comment;
+import io.wellstone.lecturejpawhiteship.post.Post;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,19 +22,18 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Account account = new Account();
-        account.setUsername("hsoh");
-        account.setPassword("hibernate");
+        Post post = new Post();
+        post.setTitle("whiteship JPA");
 
-        Study study = new Study();
-        study.setName("Spring Data JPA");
+        Comment comment1 = new Comment();
+        comment1.setComment("nice lecture");
+        post.addComment(comment1);
 
-        account.addStudy(study);
-//        account.removeStudy(study);
+        Comment comment2 = new Comment();
+        comment2.setComment("nice lecture~");
+        post.addComment(comment2);
 
-//        entityManager.persist(account);
         Session session = entityManager.unwrap(Session.class);
-        session.save(account);
-        session.save(study);
+        session.save(post);
     }
 }

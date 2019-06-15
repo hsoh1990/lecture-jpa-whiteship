@@ -1,5 +1,6 @@
-package io.wellstone.lecturejpawhiteship;
+package io.wellstone.lecturejpawhiteship.account;
 
+import io.wellstone.lecturejpawhiteship.account.Account;
 import lombok.Getter;
 import lombok.Setter;
 

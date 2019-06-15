@@ -1,4 +1,4 @@
-package io.wellstone.lecturejpawhiteship;
+package io.wellstone.lecturejpawhiteship.account;
 
 import javax.persistence.Embeddable;
 
