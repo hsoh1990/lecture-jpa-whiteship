@@ -1,17 +1,19 @@
 package io.wellstone.lecturejpawhiteship;
 
-import io.wellstone.lecturejpawhiteship.account.Account;
-import io.wellstone.lecturejpawhiteship.account.Study;
-import io.wellstone.lecturejpawhiteship.post.Comment;
 import io.wellstone.lecturejpawhiteship.post.Post;
-import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Component
 @Transactional
@@ -22,27 +24,28 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Session session = entityManager.unwrap(Session.class);
+//        jpql..
+        TypedQuery<Post> query = entityManager.createQuery("SELECT p FROM Post As p", Post.class);
 
-//        Post post = new Post();
-//        post.setTitle("whiteship JPA");
-//
-//        Comment comment1 = new Comment();
-//        comment1.setComment("nice lecture");
-//        post.addComment(comment1);
-//
-//        Comment comment2 = new Comment();
-//        comment2.setComment("nice lecture~");
-//        post.addComment(comment2);
+        List<Post> jpqlPosts = query.getResultList();
+        System.out.println("jpql ....");
+        jpqlPosts.forEach(System.out::println);
 
-//        session.save(post);
+//        criteria..
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Post> criteria = builder.createQuery(Post.class);
+        Root<Post> root = criteria.from(Post.class);
+        criteria.select(root);
+        List<Post> criteriaPosts = entityManager.createQuery(criteria).getResultList();
+        System.out.println("criteria ....");
+        criteriaPosts.forEach(System.out::println);
 
-        Post post = session.get(Post.class, 1L); // default LAZY
-        System.out.println(post.getTitle());
+//        NativeQuery..
+        List<Post> nativeQueryPosts = entityManager.createNativeQuery("SELECT * FROM POST", Post.class).getResultList();
 
-        Comment comment = session.get(Comment.class, 2L); // default EAGER
-        System.out.println(comment.getComment());
-        System.out.println(comment.getPost().getTitle());
+        System.out.println("NativeQuery ....");
+        nativeQueryPosts.forEach(System.out::println);
+
 
     }
 }
