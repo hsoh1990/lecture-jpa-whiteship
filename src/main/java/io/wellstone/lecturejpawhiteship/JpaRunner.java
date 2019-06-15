@@ -22,18 +22,27 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Post post = new Post();
-        post.setTitle("whiteship JPA");
-
-        Comment comment1 = new Comment();
-        comment1.setComment("nice lecture");
-        post.addComment(comment1);
-
-        Comment comment2 = new Comment();
-        comment2.setComment("nice lecture~");
-        post.addComment(comment2);
-
         Session session = entityManager.unwrap(Session.class);
-        session.save(post);
+
+//        Post post = new Post();
+//        post.setTitle("whiteship JPA");
+//
+//        Comment comment1 = new Comment();
+//        comment1.setComment("nice lecture");
+//        post.addComment(comment1);
+//
+//        Comment comment2 = new Comment();
+//        comment2.setComment("nice lecture~");
+//        post.addComment(comment2);
+
+//        session.save(post);
+
+        Post post = session.get(Post.class, 1L); // default LAZY
+        System.out.println(post.getTitle());
+
+        Comment comment = session.get(Comment.class, 2L); // default EAGER
+        System.out.println(comment.getComment());
+        System.out.println(comment.getPost().getTitle());
+
     }
 }
