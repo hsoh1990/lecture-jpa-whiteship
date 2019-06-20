@@ -19,7 +19,9 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    private String Comment;
+    private String comment;
+
+    private Integer likeCount;
 
     @ManyToOne
     private Post post;
