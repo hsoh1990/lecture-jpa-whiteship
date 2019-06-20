@@ -14,6 +14,10 @@ public interface CommentRepository extends MyRepository<Comment, Long> {
 //    @Query(value = "SELECT c FROM Comment AS c", nativeQuery = true)
     List<Comment> findByCommentContains(String keyword);
 
-    Page<Comment> findByLikeCountGreaterThanAndPost(int likeCount, Post post, Pageable pageable);
+    List<Comment> findByCommentContainsIgnoreCaseAndLikeCountGreaterThan(String keyword, int likeCount);
+
+    List<Comment> findByCommentContainsOrderByLikeCountDesc(String keyword);
+
+    Page<Comment> findByCommentContainsIgnoreCase(String keyword, Pageable pageable);
 
 }
