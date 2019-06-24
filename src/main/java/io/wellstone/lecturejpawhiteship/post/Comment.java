@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 @Getter
 @Setter
-//@ToString
+@ToString
 public class Comment {
     @Id
     @GeneratedValue
