@@ -1,5 +1,6 @@
 package io.wellstone.lecturejpawhiteship.post;
 
+import io.wellstone.lecturejpawhiteship.comment.Comment;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,6 +20,7 @@ public class Post {
 
     private String title;
 
+    @Lob
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE })
     private List<Comment> comments = new ArrayList<>();
 

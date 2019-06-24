@@ -1,6 +1,6 @@
 package io.wellstone.lecturejpawhiteship;
 
-import io.wellstone.lecturejpawhiteship.post.Comment;
+import io.wellstone.lecturejpawhiteship.comment.Comment;
 import io.wellstone.lecturejpawhiteship.post.Post;
 import io.wellstone.lecturejpawhiteship.post.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;

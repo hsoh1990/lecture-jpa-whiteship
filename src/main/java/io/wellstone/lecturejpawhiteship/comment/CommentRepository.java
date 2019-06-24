@@ -1,10 +1,9 @@
-package io.wellstone.lecturejpawhiteship.post;
+package io.wellstone.lecturejpawhiteship.comment;
 
 import io.wellstone.lecturejpawhiteship.common.MyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Repository;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.List;

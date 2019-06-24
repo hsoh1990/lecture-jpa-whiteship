@@ -1,6 +1,7 @@
-package io.wellstone.lecturejpawhiteship.post;
+package io.wellstone.lecturejpawhiteship.comment;
 
 
+import io.wellstone.lecturejpawhiteship.post.Post;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

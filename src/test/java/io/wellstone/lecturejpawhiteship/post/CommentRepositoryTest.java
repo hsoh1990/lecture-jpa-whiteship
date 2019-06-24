@@ -1,5 +1,7 @@
 package io.wellstone.lecturejpawhiteship.post;
 
+import io.wellstone.lecturejpawhiteship.comment.Comment;
+import io.wellstone.lecturejpawhiteship.comment.CommentRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

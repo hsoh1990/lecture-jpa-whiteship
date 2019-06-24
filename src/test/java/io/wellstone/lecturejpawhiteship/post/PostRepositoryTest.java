@@ -1,6 +1,7 @@
 package io.wellstone.lecturejpawhiteship.post;
 
 import io.wellstone.lecturejpawhiteship.Application;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,25 @@ public class PostRepositoryTest {
         // Then
         assertThat(string).isEqualTo(1);
     }
+
+    @Test
+    public void customRepository() {
+        // Given
+        Post post = new Post();
+        post.setTitle("hello spring boot common");
+        Post newPost = postRepository.save(post);
+
+        // When
+        List<Post> myPost = postRepository.findMyPost();
+
+        // Then
+        assertThat(myPost.size()).isEqualTo(1);
+        assertThat(myPost).contains(newPost);
+
+        postRepository.delete(post);
+        postRepository.flush();
+
+    }
+
+
 }
