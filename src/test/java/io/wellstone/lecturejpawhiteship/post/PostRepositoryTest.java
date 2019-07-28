@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
@@ -18,9 +20,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@Import(PostRepositoryTestConfig.class  )
 public class PostRepositoryTest {
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Test
     @Rollback(false)
@@ -79,6 +85,20 @@ public class PostRepositoryTest {
 
         postRepository.delete(post);
         postRepository.flush();
+
+    }
+
+    @Test
+    public void event() {
+//        Post post = new Post();
+//        post.setTitle("event");
+//
+//        PostPublishedEvent event = new PostPublishedEvent(post);
+//        applicationContext.publishEvent(event);
+
+        Post post = new Post();
+        post.setTitle("event");
+        Post newPost = postRepository.save(post.publish());
 
     }
 
