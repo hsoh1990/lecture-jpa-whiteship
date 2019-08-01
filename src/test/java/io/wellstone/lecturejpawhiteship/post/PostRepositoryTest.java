@@ -1,5 +1,6 @@
 package io.wellstone.lecturejpawhiteship.post;
 
+import com.querydsl.core.types.Predicate;
 import io.wellstone.lecturejpawhiteship.Application;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +15,13 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@Import(PostRepositoryTestConfig.class  )
+@Import(PostRepositoryTestConfig.class)
 public class PostRepositoryTest {
     @Autowired
     PostRepository postRepository;
@@ -99,6 +100,19 @@ public class PostRepositoryTest {
         Post post = new Post();
         post.setTitle("event");
         Post newPost = postRepository.save(post.publish());
+
+    }
+
+    @Test
+    public void queryDslRepository() {
+        Post post = new Post();
+        post.setTitle("event");
+        Post newPost = postRepository.save(post.publish());
+
+        Predicate predicate = QPost.post.title.containsIgnoreCase("event");
+        Optional<Post> one = postRepository.findOne(predicate);
+        assertThat(one).isNotEmpty();
+
 
     }
 
