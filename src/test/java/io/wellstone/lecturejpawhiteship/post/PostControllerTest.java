@@ -64,7 +64,7 @@ public class PostControllerTest {
         resultActions
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.postList[0].title").value("test1"));
+                .andExpect(jsonPath("$._embedded.postList[0].title").value("test1 "));
 
     }
 
