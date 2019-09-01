@@ -50,8 +50,7 @@ public class PostControllerTest {
     @Test
     public void getPosts() throws Exception {
         // given
-        Post post = Post.builder().title("test").build();
-        Post save = postRepository.save(post);
+        createPost();
 
 
         // when
@@ -65,7 +64,19 @@ public class PostControllerTest {
         resultActions
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].title").value("test"));
+                .andExpect(jsonPath("$._embedded.postList[0].title").value("test1"));
+
+    }
+
+    private void createPost() {
+        int count = 30;
+        while (count > 0) {
+            postRepository.save(
+                    Post.builder().title("test" + count).build()
+            );
+            count--;
+        }
+
 
     }
 }
