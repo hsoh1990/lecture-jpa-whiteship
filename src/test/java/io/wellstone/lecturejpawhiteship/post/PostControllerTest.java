@@ -36,7 +36,6 @@ public class PostControllerTest {
         Post save = postRepository.save(post);
 
 
-
         // when
         ResultActions resultActions = mockMvc.perform(get("/posts/" + save.getId()));
 
@@ -44,7 +43,29 @@ public class PostControllerTest {
         resultActions
                 .andDo(print())
                 .andExpect(status().isOk())
-        .andExpect(jsonPath("title").value("test"));
+                .andExpect(jsonPath("title").value("test"));
+
+    }
+
+    @Test
+    public void getPosts() throws Exception {
+        // given
+        Post post = Post.builder().title("test").build();
+        Post save = postRepository.save(post);
+
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/posts")
+                .param("page", "0")
+                .param("size", "10")
+                .param("sort", "created,desc")
+                .param("title", "title"));
+
+        // thne
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].title").value("test"));
 
     }
 }
