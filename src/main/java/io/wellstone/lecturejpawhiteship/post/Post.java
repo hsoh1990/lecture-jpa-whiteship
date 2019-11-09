@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//@NamedQuery(name = "Post.findByTitle", query = "select p from Post AS p where p.title = ?1")
 public class Post {
     @Id @GeneratedValue
     private Long id;

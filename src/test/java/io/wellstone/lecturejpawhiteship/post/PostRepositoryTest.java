@@ -35,7 +35,7 @@ public class PostRepositoryTest {
 
 
     @Test
-    public void save(){
+    public void save() {
         Post post = new Post();
         post.setTitle("test");
         Post savedPost = postRepository.save(post); //persist
@@ -52,8 +52,30 @@ public class PostRepositoryTest {
         assertThat(entityManager.contains(postUpdate)).isFalse();
         assertThat(entityManager.contains(updatePost)).isTrue();
         assertThat(postUpdate != updatePost);
-
-
     }
 
+    @Test
+    public void findByTitleStartingWith() {
+        Post post = new Post();
+        post.setTitle("test1");
+        postRepository.save(post); //persist
+
+        Post post1 = new Post();
+        post1.setTitle("test2");
+        postRepository.save(post1);
+
+        List<Post> all = postRepository.findByTitleStartingWith("test");
+        assertThat(all.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void findByTitle() {
+        Post post = new Post();
+        post.setTitle("test");
+        postRepository.save(post); //persist
+
+        List<Post> all = postRepository.findByTitle("test");
+        assertThat(all.size()).isEqualTo(1);
+
+    }
 }
