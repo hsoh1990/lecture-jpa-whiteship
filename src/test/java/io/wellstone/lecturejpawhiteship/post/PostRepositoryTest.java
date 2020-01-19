@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,6 +80,23 @@ public class PostRepositoryTest {
         List<Post> all = postRepository.findByTitle("test", Sort.by("title"));
 //        List<Post> all = postRepository.findByTitle("test", JpaSort.unsafe("LENGTH(title"));
         assertThat(all.size()).isEqualTo(1);
+    }
 
+    public Post savePost(){
+        Post post = new Post();
+        post.setTitle("spring");
+        return postRepository.save(post);
+    }
+
+    @Test
+    public void updateTitle(){
+        Post spring = savePost();
+        int update = postRepository.updateTitle("Hibernate", spring.getId());
+        assertThat(update).isEqualTo(1);
+
+//        --> transaction 끝나기 전에 다시 호출해도 1차 캐쉬에서 가지고 있는 Post객체를 리턴하기 때문에 변경 X 사용 주의 필요
+//        --> @Modifying(clearAutomatically = true) 를 통해 1차 캐쉬 값을 지우고 다시 조회
+        Optional<Post> byId = postRepository.findById(spring.getId());
+        assertThat(byId.get().getTitle()).isEqualTo("Hibernate");
     }
 }
